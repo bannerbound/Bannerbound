@@ -3,14 +3,13 @@ package com.bannerbound.core.civpm.managers;
 import com.bannerbound.core.BannerboundCore;
 import com.bannerbound.core.civpm.data.CPMRegion;
 import com.bannerbound.core.civpm.utils.CPMMathUtils;
-import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import it.unimi.dsi.fastutil.longs.LongSet;
+import it.unimi.dsi.fastutil.longs.*;
+import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.LevelResource;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
@@ -52,34 +51,27 @@ public class CPMRegionsManager {
 
         changed_regions.clear();
 
-        // clear cache
-        for (long cachedRegionPos : cached_regions.keySet()) {
-            CPMRegion region = cached_regions.get(cachedRegionPos);
+        ObjectIterator<CPMRegion> cached_regions_iterator = cached_regions.values().iterator();
 
+        while (cached_regions_iterator.hasNext()) {
+            CPMRegion region = cached_regions_iterator.next();
             boolean loaded = isRegionLoaded(region, playerList);
 
             if (!loaded) {
-                cached_regions.remove(cachedRegionPos);
+                cached_regions_iterator.remove();
             }
         }
     }
 
-    private static boolean isRegionLoaded(CPMRegion region, List<ServerPlayer> playerList) {
-        int regionX = region.getX();
-        int regionY = region.getY();
+    public static boolean isRegionLoadedByPlayer(CPMRegion region, Player player) {
+        return CPMMathUtils.CPM2DUtils.distanceToRegionSqr(region.getPos(), player.blockPosition()) < 9;
+    }
 
+    private static boolean isRegionLoaded(CPMRegion region, List<ServerPlayer> playerList) {
         boolean loaded = false;
 
         for (ServerPlayer player : playerList) {
-            int playerRegionX = Mth.floor(player.getBlockX() / 48.0);
-            int playerRegionZ = Mth.floor(player.getBlockZ() / 48.0);
-
-            int dx = regionX - playerRegionX;
-            int dz = regionY - playerRegionZ;
-
-            int distSqrRegions = dx * dx + dz * dz;
-
-            if (distSqrRegions < 9) {
+            if (isRegionLoadedByPlayer(region, player)) {
                 loaded = true;
             }
         }
@@ -144,6 +136,11 @@ public class CPMRegionsManager {
         CPMRegion new_region = new CPMRegion(pos);
         cacheRegion(new_region);
         return new_region;
+    }
+
+    @Nullable
+    public CPMRegion getRegionIfCached(long pos) {
+        return cached_regions.get(pos);
     }
 
     public void cacheRegion(CPMRegion region) {

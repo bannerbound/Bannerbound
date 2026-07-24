@@ -1,6 +1,7 @@
 package com.bannerbound.core.civpm.managers.packets;
 
 import com.bannerbound.core.civpm.packets.clienttoserver.CPMRegionRequestPacket;
+import com.bannerbound.core.civpm.packets.servertoclient.CPMMoveWandererPacket;
 import com.bannerbound.core.civpm.packets.servertoclient.CPMRegionResponsePacket;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
@@ -18,6 +19,12 @@ public class CPMPacketsRegistrar {
                 CPMRegionResponsePacket.TYPE,
                 CPMRegionResponsePacket.STREAM_CODEC,
                 CPMClientPacketsManager::handleRegionResponsePacket
+        );
+
+        registrar.playToClient(
+                CPMMoveWandererPacket.TYPE,
+                CPMMoveWandererPacket.STREAM_CODEC,
+                CPMClientPacketsManager::handleMoveWandererPacket
         );
     }
 

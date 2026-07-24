@@ -1,9 +1,12 @@
 package com.bannerbound.core.civpm.events;
 
 import com.bannerbound.core.BannerboundCore;
+import com.bannerbound.core.api.settlement.Era;
 import com.bannerbound.core.civpm.CivPMClient;
 import com.bannerbound.core.civpm.managers.CPMClientRegionsManager;
 import com.bannerbound.core.civpm.utils.CPMMathUtils;
+import com.bannerbound.core.civpm.utils.CPMSpawnUtils;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -35,5 +38,7 @@ public class CPMClientEvents {
     @SubscribeEvent
     public static void onClientLogout(ClientPlayerNetworkEvent.LoggingOut event) {
         CPMClientRegionsManager.current_region = Long.MAX_VALUE;
+        CivPMClient.getRegionsManager().cached_regions().clear();
+        CPMSpawnUtils.playerLeftWorld();
     }
 }

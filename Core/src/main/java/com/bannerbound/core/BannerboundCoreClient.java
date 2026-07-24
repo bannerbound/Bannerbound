@@ -2,6 +2,8 @@ package com.bannerbound.core;
 
 import com.bannerbound.core.api.settlement.Citizen;
 
+import com.bannerbound.core.civpm.entities.renderers.CPMFakeCitizenRenderer;
+import com.bannerbound.core.client.FisherBobberRenderer;
 import org.jetbrains.annotations.ApiStatus;
 
 import com.bannerbound.core.client.CitizenRenderer;
@@ -47,12 +49,10 @@ public class BannerboundCoreClient {
     @SubscribeEvent
     static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(BannerboundCore.CITIZEN.get(), CitizenRenderer::new);
-        event.registerEntityRenderer(BannerboundCore.BARBARIAN.get(),
-            ctx -> new CitizenRenderer(ctx));
-        event.registerEntityRenderer(BannerboundCore.MERCENARY.get(),
-            ctx -> new CitizenRenderer(ctx));
-        event.registerEntityRenderer(BannerboundCore.FISHER_BOBBER.get(),
-            com.bannerbound.core.client.FisherBobberRenderer::new);
+        event.registerEntityRenderer(BannerboundCore.BARBARIAN.get(), CitizenRenderer::new);
+        event.registerEntityRenderer(BannerboundCore.MERCENARY.get(), CitizenRenderer::new);
+        event.registerEntityRenderer(BannerboundCore.FISHER_BOBBER.get(), FisherBobberRenderer::new);
+        event.registerEntityRenderer(BannerboundCore.CPM_FAKE_CITIZEN_ENTITY.get(), CPMFakeCitizenRenderer::new);
     }
 
     @SubscribeEvent
