@@ -454,9 +454,10 @@ public final class HuntingEvents {
     }
 
     private static int boneCountFor(LivingEntity entity, RandomSource rng) {
-        if (entity instanceof Chicken) {
+        if (entity instanceof Chicken || entity instanceof Rabbit) {
             return rng.nextFloat() < 0.5f ? 1 : 0;
         }
+
         if (entity instanceof Horse) {
             return 2 + rng.nextInt(3);
         }
@@ -464,7 +465,7 @@ public final class HuntingEvents {
                 || entity instanceof Goat || entity instanceof Pig) {
             return 1 + rng.nextInt(3);
         }
-        if (entity instanceof Wolf || entity instanceof Ocelot) {
+        if (entity instanceof Wolf || entity instanceof Ocelot || entity instanceof Fox) {
             return 1 + rng.nextInt(2);
         }
         return 0;

@@ -947,6 +947,7 @@ public final class AntiquityEvents {
     @SubscribeEvent
     static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof net.minecraft.server.level.ServerPlayer sp) {
+            Knapping.onPlayerDisconnect(sp);
             Fletching.onPlayerDisconnect(sp);
             Hammer.onPlayerDisconnect(sp);
             Pottery.onPlayerDisconnect(sp);

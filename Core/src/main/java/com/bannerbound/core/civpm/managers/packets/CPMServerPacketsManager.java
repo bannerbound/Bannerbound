@@ -1,12 +1,10 @@
 package com.bannerbound.core.civpm.managers.packets;
 
-import com.bannerbound.core.BannerboundCore;
 import com.bannerbound.core.civpm.CivPM;
 import com.bannerbound.core.civpm.data.CPMRegion;
 import com.bannerbound.core.civpm.packets.clienttoserver.CPMRegionRequestPacket;
 import com.bannerbound.core.civpm.packets.servertoclient.CPMRegionResponsePacket;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.neoforged.neoforge.network.PacketDistributor;

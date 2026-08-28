@@ -195,19 +195,19 @@ public class ForemansRodItem extends Item {
             return InteractionResult.CONSUME;
         }
 
-        if (DIGGER_TYPE.equals(wsType)) {
-            com.bannerbound.core.territory.ChunkResource material =
-                com.bannerbound.core.territory.ChunkResources.typeAt(
-                    serverPlayer.serverLevel(), new net.minecraft.world.level.ChunkPos(clicked));
-            if (com.bannerbound.core.territory.MaterialDepositLayout.isMaterialChunk(material)) {
-                tryCommitMaterialDepositMarker(serverPlayer, stack, clicked, material);
-                return InteractionResult.CONSUME;
-            }
-        }
-
         BlockPos a = stack.get(BannerboundCore.FOREMAN_POINT_A.get());
 
         if (a == null) {
+            if (DIGGER_TYPE.equals(wsType)) {
+                com.bannerbound.core.territory.ChunkResource material =
+                        com.bannerbound.core.territory.ChunkResources.typeAt(
+                                serverPlayer.serverLevel(), new net.minecraft.world.level.ChunkPos(clicked));
+                if (com.bannerbound.core.territory.MaterialDepositLayout.isMaterialChunk(material)) {
+                    tryCommitMaterialDepositMarker(serverPlayer, stack, clicked, material);
+                    return InteractionResult.CONSUME;
+                }
+            }
+
             stack.set(BannerboundCore.FOREMAN_POINT_A.get(), clicked);
             serverPlayer.displayClientMessage(
                 Component.translatable("bannerbound.foremans_rod.point_a_set",
