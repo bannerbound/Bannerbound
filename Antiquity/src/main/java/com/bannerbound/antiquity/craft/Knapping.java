@@ -63,6 +63,10 @@ public final class Knapping {
 
     private static final Map<UUID, Session> SESSIONS = new HashMap<>();
 
+    public static void onPlayerDisconnect(ServerPlayer player) {
+        SESSIONS.remove(player.getUUID());
+    }
+
     public static boolean holdingTwoRocks(ServerPlayer player) {
         return player.getMainHandItem().is(KNAPPING_ROCKS) && player.getOffhandItem().is(KNAPPING_ROCKS);
     }
