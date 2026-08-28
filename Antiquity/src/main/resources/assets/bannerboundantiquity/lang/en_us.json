@@ -470,6 +470,7 @@
   "bannerboundantiquity.jei.casting.note.bronze": "Alloy %s mB of bronze in the crucible (keep copper 60–90%%, tin 10–40%%), then pour into the fired mould.",
   "bannerboundantiquity.jei.cold_hammer": "Cold-Hammer Forging",
   "bannerboundantiquity.jei.cold_hammer.note": "Cold-hammer the part on a Stone Anvil (%s strikes). The timing minigame sets the tool's quality.",
+  "message.bannerboundantiquity.need_hammer": "You need a hammer to work this.",
   "bannerboundantiquity.jei.mortar": "Mortar and Pestle",
   "bannerboundantiquity.jei.mortar.note": "Grind the ingredients in a Mortar and Pestle to produce %s.",
   "bannerboundantiquity.jei.carpentry": "Woodworking",
