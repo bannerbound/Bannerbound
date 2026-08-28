@@ -22,7 +22,7 @@ import net.neoforged.neoforge.client.event.RegisterShadersEvent;
  */
 @OnlyIn(Dist.CLIENT)
 @ApiStatus.Internal
-@EventBusSubscriber(modid = BannerboundCore.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = BannerboundCore.MODID, value = Dist.CLIENT)
 public final class CrisisRevealShaders {
     private static ShaderInstance crisisReveal;
 

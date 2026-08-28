@@ -1,5 +1,6 @@
 package com.bannerbound.core;
 
+import com.bannerbound.core.civpm.entities.CPMFakeCitizenEntity;
 import org.jetbrains.annotations.ApiStatus;
 
 import org.slf4j.Logger;
@@ -50,7 +51,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.minecraft.network.codec.ByteBufCodecs;
 
 /**
  * Mod entry point and registration hub: owns the {@link #MODID} constant and every common-side
@@ -121,7 +121,7 @@ public class BannerboundCore {
     public static final DeferredHolder<MenuType<?>, MenuType<StockpileMenu>> STOCKPILE_MENU =
         MENUS.register("stockpile", () -> IMenuTypeExtension.create(StockpileMenu::new));
 
-    public static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(MODID);
+    public static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, MODID);
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> SETTLEMENT_REF =
         COMPONENTS.registerComponentType("settlement_ref",
             builder -> builder
@@ -247,6 +247,14 @@ public class BannerboundCore {
                 .updateInterval(2)
                 .build("fisher_bobber"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<CPMFakeCitizenEntity>> CPM_FAKE_CITIZEN_ENTITY =
+            ENTITY_TYPES.register("cpm_fake_citizen",
+                () -> EntityType.Builder.<CPMFakeCitizenEntity>of(CPMFakeCitizenEntity::new, MobCategory.MISC)
+                        .sized(0.6f, 1.95f)
+                        .clientTrackingRange(10)
+                        .build("cpm_fake_citizen")
+            );
+
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(Registries.SOUND_EVENT, MODID);
     public static final DeferredHolder<SoundEvent, SoundEvent> FOUND_SETTLEMENT_SOUND = SOUNDS.register(
         "found_settlement",
@@ -332,6 +340,7 @@ public class BannerboundCore {
 
     private void registerEntityAttributes(net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent event) {
         event.put(CITIZEN.get(), CitizenEntity.createAttributes().build());
+        event.put(CPM_FAKE_CITIZEN_ENTITY.get(), CitizenEntity.createAttributes().build());
         event.put(BARBARIAN.get(), BarbarianEntity.createAttributes().build());
         event.put(MERCENARY.get(), com.bannerbound.core.entity.MercenaryEntity.createAttributes().build());
     }

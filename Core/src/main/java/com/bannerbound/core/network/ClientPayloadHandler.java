@@ -251,7 +251,8 @@ public final class ClientPayloadHandler {
     public static void handleSettlementFoodWarning(SettlementFoodWarningPayload payload,
             IPayloadContext context) {
         context.enqueueWork(() ->
-            com.bannerbound.core.client.ClientFoodWarningState.set(payload.level()));
+            com.bannerbound.core.client.ClientFoodWarningState.
+                    set(payload.level()));
     }
 
     public static void handleRaidWarning(RaidWarningPayload payload, IPayloadContext context) {
