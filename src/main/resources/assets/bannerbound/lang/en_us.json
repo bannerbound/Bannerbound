@@ -1,3 +1,16 @@
 {
-
+  "bannerbound.configuration.civpm": "CivPM",
+  "bannerbound.configuration.CivPMWandererEnabled": "Wanderers",
+  "bannerbound.configuration.ClientCivPMWandererEnabled": "Wanderers",
+  "bannerbound.configuration.ClientCivPMSimplifiedWalking": "Simplified Walking",
+  "bannerbound.configuration.CivPMWandererWalk": "Walking Wanderers",
+  "bannerbound.configuration.CivPMWandererCommunication": "Talking Wanderers",
+  "bannerbound.configuration.title": "Bannerbound Configuration",
+  "bannerbound.configuration.section.bannerbound.client.toml": "Client Settings",
+  "bannerbound.configuration.section.bannerbound.client.toml.title": "Bannerbound Client Configuration",
+  "bannerbound.configuration.section.bannerbound.server.toml": "Server Settings",
+  "bannerbound.configuration.civpm.button": "CivPM Settings",
+  "bannerbound.configuration.civpm.tooltip": "Configure CivPM and wanderer mechanics",
+  "bannerbound.configuration.ClientCivPMWandererEnabled.tooltip": "Toggle wanderer functionality on the client",
+  "bannerbound.configuration.ClientCivPMSimplifiedWalking.tooltip": "When enabled, wanderers will fly towards the location instead of checking for blocks, saving on gravity calculation costs & block checks"
 }

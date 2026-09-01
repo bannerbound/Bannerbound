@@ -72,4 +72,19 @@ public enum Era {
         }
         return null;
     }
+
+    public boolean isAtLeast(Era other) {
+        if (other == null) return true;
+        return this.ordinal() >= other.ordinal();
+    }
+
+    public boolean isBefore(Era other) {
+        if (other == null) return false;
+        return this.ordinal() < other.ordinal();
+    }
+
+    public boolean isAfter(Era other) {
+        if (other == null) return true;
+        return this.ordinal() > other.ordinal();
+    }
 }
