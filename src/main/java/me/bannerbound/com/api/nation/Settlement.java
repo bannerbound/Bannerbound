@@ -1,4 +1,4 @@
-package me.bannerbound.com.nation;
+package me.bannerbound.com.api.nation;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import me.bannerbound.com.api.houses.House;

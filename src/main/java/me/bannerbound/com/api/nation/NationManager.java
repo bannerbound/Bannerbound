@@ -1,4 +1,4 @@
-package me.bannerbound.com.nation;
+package me.bannerbound.com.api.nation;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package me.bannerbound.com.nation;
+package me.bannerbound.com.api.nation;
 
 import me.bannerbound.com.api.research.ResearchDefinition;
 import me.bannerbound.com.api.settlement.Era;

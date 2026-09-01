@@ -11,11 +11,6 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 @EventBusSubscriber (modid = Bannerbound.MODID)
 public class CPMServerEvents {
     @SubscribeEvent
-    public static void tickEvent(ServerTickEvent.Post event) {
-        CivPM.getInstance().tick(event);
-    }
-
-    @SubscribeEvent
     public static void worldSaveTriggered(LevelEvent.Save event) {
         if (event.getLevel() instanceof ServerLevel serverLevel) {
             if (serverLevel.dimension() == ServerLevel.OVERWORLD) {

@@ -1,5 +1,6 @@
 package me.bannerbound.com;
 
+import me.bannerbound.com.api.managers.TickManager;
 import me.bannerbound.com.pms.civpm.CivPM;
 import me.bannerbound.com.pms.civpm.managers.CPMWandererWalkManager;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -68,13 +69,12 @@ public class BannerboundServerConfig {
         cpmWandererWalking = CPM_WANDERER_WALKING.get();
         cpmWandererCommunication = CPM_WANDERER_COMMUNICATION.get();
 
-        CivPM civPm = CivPM.getInstance();
         CPMWandererWalkManager walkManager = CivPM.getWandererWalkManager();
 
         if (cpmWandererEnabled && cpmWandererWalking) {
-            civPm.addListener(walkManager);
+            TickManager.addListener(walkManager);
         } else {
-            civPm.removeListener(walkManager);
+            TickManager.removeListener(walkManager);
         }
 
         CivPM.getWandererManager().configUpdated();

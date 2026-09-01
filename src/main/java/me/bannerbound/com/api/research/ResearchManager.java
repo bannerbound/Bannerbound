@@ -6,7 +6,7 @@ import me.bannerbound.com.api.research.treetypes.CultureResearchTreeResource;
 import me.bannerbound.com.api.research.treetypes.FaithResearchTreeResource;
 import me.bannerbound.com.api.research.treetypes.NormalResearchTreeResource;
 import me.bannerbound.com.api.research.treetypes.WarResearchTreeResource;
-import me.bannerbound.com.nation.Nation;
+import me.bannerbound.com.api.nation.Nation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

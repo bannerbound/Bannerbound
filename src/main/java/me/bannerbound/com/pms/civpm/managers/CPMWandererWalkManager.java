@@ -1,5 +1,8 @@
 package me.bannerbound.com.pms.civpm.managers;
 
+import me.bannerbound.com.api.managers.TickManagerListener;
+import me.bannerbound.com.api.managers.TickManagerListenerID;
+import me.bannerbound.com.api.managers.TickManagerListenerSide;
 import me.bannerbound.com.pms.civpm.CivPM;
 import me.bannerbound.com.pms.civpm.data.CPMRegion;
 import me.bannerbound.com.pms.civpm.packets.servertoclient.CPMMoveWandererPacket;
@@ -10,21 +13,26 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.*;
 
-public class CPMWandererWalkManager implements CPMListener {
-    private final int MAX_CITIZENS_WALKING_PER_TRIGGER = 1;
-    private final int WALK_TRIGGER_COOLDOWN = 10;
-    private final float TRIGGER_CHANCE = 0.4F;
+@TickManagerListenerID(value = "CPMWandererWalkManager", side = TickManagerListenerSide.SERVER)
+public class CPMWandererWalkManager implements TickManagerListener {
 
     private int walkCooldown = 0;
 
     @Override
-    public void tick(ServerTickEvent.Post event, ServerLevel overworld) {
+    public void serverTick(ServerTickEvent.Post event) {
+        ServerLevel overworld = event.getServer().overworld();
+
         walkCooldown++;
+
+        int WALK_TRIGGER_COOLDOWN = 10;
+        float TRIGGER_CHANCE = 0.4F;
+        int MAX_CITIZENS_WALKING_PER_TRIGGER = 1;
 
         if (walkCooldown >= WALK_TRIGGER_COOLDOWN) {
             walkCooldown = 0;
@@ -36,7 +44,7 @@ public class CPMWandererWalkManager implements CPMListener {
             for (ServerPlayer player : players) {
                 long playerRegion = CPMMathUtils.CPM2DUtils.getRegionPosForPlayer(player);
                 int centerRX = CPMMathUtils.CPM2DUtils.unpackX(playerRegion);
-                int centerRZ = CPMMathUtils.CPM2DUtils.unpackY(playerRegion); 
+                int centerRZ = CPMMathUtils.CPM2DUtils.unpackY(playerRegion);
 
                 for (int dx = -1; dx <= 1; dx++) {
                     for (int dz = -1; dz <= 1; dz++) {
@@ -57,12 +65,11 @@ public class CPMWandererWalkManager implements CPMListener {
                 List<UUID> wandererIds = region.getWandererIds();
                 if (wandererIds.isEmpty()) continue;
 
-                int amountOfCitizens = MAX_CITIZENS_WALKING_PER_TRIGGER;
                 int wanderersSize = wandererIds.size();
 
                 List<CPMMoveWandererPacket> regionPackets = new ArrayList<>();
 
-                for (int i = 0; i < amountOfCitizens; i++) {
+                for (int i = 0; i < MAX_CITIZENS_WALKING_PER_TRIGGER; i++) {
                     UUID randomId = wandererIds.get(source.nextInt(wanderersSize));
                     BlockPos currentPos = region.getWanderers().get(randomId);
                     if (currentPos == null) continue;
@@ -81,7 +88,7 @@ public class CPMWandererWalkManager implements CPMListener {
                 }
             }
 
-            
+
             for (ServerPlayer player : players) {
                 long playerRegion = CPMMathUtils.CPM2DUtils.getRegionPosForPlayer(player);
                 int centerRX = CPMMathUtils.CPM2DUtils.unpackX(playerRegion);
@@ -91,7 +98,7 @@ public class CPMWandererWalkManager implements CPMListener {
                     for (int dz = -1; dz <= 1; dz++) {
                         long targetRegionPos = CPMMathUtils.CPM2DUtils.pack(centerRX + dx, centerRZ + dz);
 
-                        
+
                         List<CPMMoveWandererPacket> packets = pendingMovements.get(targetRegionPos);
                         if (packets != null) {
                             for (CPMMoveWandererPacket packet : packets) {
@@ -102,5 +109,10 @@ public class CPMWandererWalkManager implements CPMListener {
                 }
             }
         }
+    }
+
+    @Override
+    public void clientTick(ClientTickEvent.Post event) {
+
     }
 }
